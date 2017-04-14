@@ -7,23 +7,28 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.endpoint.mvc.AbstractMvcEndpoint;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.zhubao.exception.OauthException;
 import org.zhubao.service.ApiService;
 import org.zhubao.util.PatternUtil;
 
-@RestController
-public class DispatchController {
+@ResponseBody
+public class ApiDispatchEndpoint extends AbstractMvcEndpoint {
 
-	private Logger logger = LoggerFactory.getLogger(DispatchController.class);
+	public ApiDispatchEndpoint() {
+		super("/**", true);
+	}
+
+	private Logger logger = LoggerFactory.getLogger(ApiDispatchEndpoint.class);
 
 	@Autowired
 	private ApiService apiService;
 	
-	@GetMapping("/**")
+	@GetMapping("/api/**")
 	public Object getMethod(@RequestHeader("Authorization") String accessToken, HttpServletRequest request) {
 		String[] accessTokenArr = accessToken.split(" ");
 		if(accessTokenArr.length > 1) {

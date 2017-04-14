@@ -17,14 +17,11 @@ import org.zhubao.dto.TokenResponse;
 import org.zhubao.entity.Application;
 import org.zhubao.entity.Scope;
 import org.zhubao.entity.Token;
-import org.zhubao.entity.TokenScope;
-import org.zhubao.entity.key.TokenScopeKey;
 import org.zhubao.enumeration.TokenState;
 import org.zhubao.enumeration.TokenType;
 import org.zhubao.repository.ApplicationRepository;
 import org.zhubao.repository.ScopeRepository;
 import org.zhubao.repository.TokenRepository;
-import org.zhubao.repository.TokenScopeRepository;
 import org.zhubao.service.ApplicationService;
 import org.zhubao.util.Credentials;
 import org.zhubao.util.OauthUtil;
@@ -43,9 +40,6 @@ public class ApplicationServiceImpl implements ApplicationService {
 
 	@Autowired
 	private TokenRepository tokenRepository;
-
-	@Autowired
-	private TokenScopeRepository tokenScopeRepository;
 
 	@Override
 	public TokenResponse generateApplicationToken(Credentials credentials, String scope) {
@@ -112,15 +106,8 @@ public class ApplicationServiceImpl implements ApplicationService {
 		token.setUserId(1);
 		token.setTokenScopeHash(scopeHash);
 		token.setTokenState(TokenState.ACTIVE);
+		token.setScopes(existScopes);
 		tokenRepository.save(token);
-
-		// save token scope relations
-		for (Scope s : existScopes) {
-			TokenScope tokenScope = new TokenScope();
-			tokenScope.setId(new TokenScopeKey(s.getId(), token.getId()));
-			tokenScope.setDateCreated(new Date());
-			tokenScopeRepository.save(tokenScope);
-		}
 		return token;
 	}
 
