@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.transaction.Transactional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,7 @@ import org.zhubao.util.OauthUtil;
 import com.alibaba.fastjson.JSON;
 
 @Service
+@Transactional
 public class ApiServiceImpl implements ApiService {
 
 	private Logger logger = LoggerFactory.getLogger(ApiServiceImpl.class);

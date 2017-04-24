@@ -20,7 +20,7 @@ import org.zhubao.util.PatternUtil;
 public class ApiDispatchEndpoint extends AbstractMvcEndpoint {
 
 	public ApiDispatchEndpoint() {
-		super("/**", true);
+		super("/", true);
 	}
 
 	private Logger logger = LoggerFactory.getLogger(ApiDispatchEndpoint.class);
@@ -28,7 +28,7 @@ public class ApiDispatchEndpoint extends AbstractMvcEndpoint {
 	@Autowired
 	private ApiService apiService;
 	
-	@GetMapping("/api/**")
+	@GetMapping("/**")
 	public Object getMethod(@RequestHeader("Authorization") String accessToken, HttpServletRequest request) {
 		String[] accessTokenArr = accessToken.split(" ");
 		if(accessTokenArr.length > 1) {

@@ -1,9 +1,16 @@
+/* truncate the user table */
+SET FOREIGN_KEY_CHECKS = 0; 
+TRUNCATE `oauth`.`user`; 
+SET FOREIGN_KEY_CHECKS = 1;
+
+INSERT INTO `oauth`.`user` (`date_created`, `email`, `last_login_date`, `password`, `password_hash`, `username`) VALUES (now(), 'zrb0307@gmail.com', now(), 'zhubao0307', 'jasonzhu', 'Jason');
+
 /* truncate the application table */
 SET FOREIGN_KEY_CHECKS = 0; 
 TRUNCATE `oauth`.`application`; 
 SET FOREIGN_KEY_CHECKS = 1;
 
-INSERT INTO `oauth`.`application` (`name`, `client_id`, `client_secret`, `date_created`, `redirect_url`) VALUES ('JasonApplication', '6wCRM7NQGumjSMZ1AlnpEQBJxfUa', '1NsceIHllowQ0ZqBOBna5ZAQqNka', now(), 'http://127.0.0.1:8080/oauth2callback');
+INSERT INTO `oauth`.`application` (`name`, `client_id`, `client_secret`, `date_created`, `redirect_url`, `user_id`) VALUES ('JasonApplication', '6wCRM7NQGumjSMZ1AlnpEQBJxfUa', '1NsceIHllowQ0ZqBOBna5ZAQqNka', now(), 'http://127.0.0.1:8080/oauth2callback', 1);
 
 
 /* truncate the scope table */

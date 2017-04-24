@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import javax.transaction.Transactional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,7 @@ import org.zhubao.util.OauthUtil;
 
 
 @Service
+@Transactional
 public class ApplicationServiceImpl implements ApplicationService {
 
 	private Logger logger = LoggerFactory.getLogger(ApplicationServiceImpl.class);
@@ -109,6 +112,12 @@ public class ApplicationServiceImpl implements ApplicationService {
 		token.setScopes(existScopes);
 		tokenRepository.save(token);
 		return token;
+	}
+
+	@Override
+	public Application createApplication(String applicationName,
+			String description, String redirectUrl) {
+		return null;
 	}
 
 }
